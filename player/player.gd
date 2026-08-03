@@ -7,7 +7,7 @@ const BULLET_SCENE: PackedScene = preload("res://projectiles/bullet.tscn")
 
 # Movimiento
 @export var speed := 300.0
-@export var jump_velocity := -400.0
+@export var jump_velocity := -550.0
 
 var gravity: float = ProjectSettings.get_setting(
 	"physics/2d/default_gravity"
