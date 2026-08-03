@@ -20,7 +20,7 @@ position = Vector2(171, 301)
 jump_velocity = -443.0
 
 [node name="EnemySpawner" type="Marker2D" parent="." unique_id=1511704872]
-position = Vector2(489, 212)
+position = Vector2(458, 262)
 script = ExtResource("2_hjsbj")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=1814140400]
