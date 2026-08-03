@@ -31,10 +31,10 @@ autostart = true
 position = Vector2(321, 180)
 
 [node name="Battery 1" parent="." unique_id=787078769 instance=ExtResource("4_5mrsh")]
-position = Vector2(46, 199)
+position = Vector2(33, 208)
 
 [node name="Battery 2" parent="." unique_id=365506501 instance=ExtResource("4_5mrsh")]
-position = Vector2(590, 197)
+position = Vector2(606, 209)
 
 [node name="Battery 3" parent="." unique_id=1361569264 instance=ExtResource("4_5mrsh")]
-position = Vector2(318, 198)
+position = Vector2(320, 208)

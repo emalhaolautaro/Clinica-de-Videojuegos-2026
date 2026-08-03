@@ -4,29 +4,33 @@
 [ext_resource type="Texture2D" uid="uid://dcnean5i264my" path="res://enemies/assets/godotrobot.png" id="2_q54yc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rggsx"]
-radius = 14.0
-height = 72.0
+radius = 6.0
+height = 22.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d6q8a"]
-radius = 16.0
-height = 68.0
+radius = 6.0
+height = 22.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1477524661]
+position = Vector2(23, -1)
 collision_layer = 2
 script = ExtResource("1_5w4hd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=535627544]
-position = Vector2(30, 39)
-scale = Vector2(0.13076034, 0.13076033)
+position = Vector2(-22.999998, 0.99999994)
+scale = Vector2(0.07, 0.07)
 texture = ExtResource("2_q54yc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1590172292]
-position = Vector2(29, 45)
+position = Vector2(-24, 3)
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_rggsx")
 
 [node name="DamageArea" type="Area2D" parent="." unique_id=1238729919]
+position = Vector2(0, 3)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=560190195]
-position = Vector2(29, 43)
+position = Vector2(-24, 0)
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_d6q8a")
