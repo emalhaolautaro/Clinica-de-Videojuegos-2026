@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bj7kmtmpykqaf" path="res://levels/level.gd" id="1_safpt"]
 [ext_resource type="Script" uid="uid://dmy2mub5rl6ue" path="res://levels/enemy_spawner.gd" id="2_hjsbj"]
 [ext_resource type="PackedScene" uid="uid://cvacfntm6nkyv" path="res://objects/batteries/battery.tscn" id="4_5mrsh"]
+[ext_resource type="PackedScene" uid="uid://sptibfk0mv6o" path="res://ui/hud/hud.tscn" id="6_gjl0y"]
 
 [node name="Level" type="Node2D" unique_id=174893792]
 script = ExtResource("1_safpt")
@@ -40,3 +41,5 @@ position = Vector2(606, 209)
 
 [node name="Battery 3" parent="." unique_id=1361569264 instance=ExtResource("4_5mrsh")]
 position = Vector2(320, 208)
+
+[node name="HUD" parent="." unique_id=212758822 instance=ExtResource("6_gjl0y")]

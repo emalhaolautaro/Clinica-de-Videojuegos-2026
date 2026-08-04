@@ -13,7 +13,7 @@ func start_game() -> void:
 
 func finish_game(victory: bool) -> void:
 	last_result_was_victory = victory
-	get_tree().change_scene_to_file(END_MENU_PATH)
+	get_tree().call_deferred("change_scene_to_file", END_MENU_PATH)
 
 
 func restart_level() -> void:

@@ -1,6 +1,8 @@
 extends Node2D
 
 @onready var player: CharacterBody2D = $Player
+@onready var hud: CanvasLayer = $HUD
+
 
 var batteries_remaining := 0
 var game_finished := false
@@ -17,6 +19,17 @@ func _ready() -> void:
 		battery.destroyed.connect(_on_battery_destroyed)
 
 	player.died.connect(_on_player_died)
+	
+	if hud:
+		player.max_health_changed.connect(hud.update_max_health)
+		player.health_changed.connect(hud.update_health)
+		hud.update_max_health(player.max_health)
+		hud.update_health(player.health)
+		
+		player.max_energy_changed.connect(hud.update_max_energy)
+		player.energy_changed.connect(hud.update_energy)
+		hud.update_max_energy(player.max_energy)
+		hud.update_energy(player.energy)
 
 
 func _on_battery_destroyed() -> void:

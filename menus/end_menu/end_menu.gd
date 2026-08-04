@@ -6,10 +6,10 @@ extends Control
 var is_victory := false
 
 
-func setup(victory: bool) -> void:
-	is_victory = victory
+func _ready() -> void:
+	is_victory = GameManager.last_result_was_victory
 
-	if victory:
+	if is_victory:
 		result_label.text = "¡VICTORIA!"
 		primary_button.text = "VOLVER AL MENÚ"
 	else:

@@ -19,6 +19,11 @@ var facing_direction := 1
 @export var max_health := 5
 var health: int
 
+# Energía
+@export var max_energy := 4.0
+@export var energy_recharge_rate := 1.0
+var energy: float
+
 
 # Nodos
 @onready var muzzle: Marker2D = $Muzzle
@@ -26,14 +31,31 @@ var health: int
 #Señal Muerte
 signal died
 
+# Señales de vida
+signal health_changed(new_health: int)
+signal max_health_changed(max_health: int)
+
+# Señales de energía
+signal energy_changed(new_energy: float)
+signal max_energy_changed(max_energy: float)
+
 func _ready() -> void:
 	health = max_health
-
+	max_health_changed.emit(max_health)
+	health_changed.emit(health)
+	
+	energy = max_energy
+	max_energy_changed.emit(max_energy)
+	energy_changed.emit(energy)
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	handle_jump()
 	handle_horizontal_movement()
+	
+	if energy < max_energy:
+		energy = min(energy + energy_recharge_rate * delta, max_energy)
+		energy_changed.emit(energy)
 
 	move_and_slide()
 
@@ -69,6 +91,12 @@ func handle_horizontal_movement() -> void:
 # Disparo
 
 func shoot() -> void:
+	if energy < 1.0:
+		return
+	
+	energy -= 1.0
+	energy_changed.emit(energy)
+	
 	var bullet = BULLET_SCENE.instantiate()
 
 	get_tree().current_scene.add_child(bullet)
@@ -81,6 +109,7 @@ func shoot() -> void:
 
 func take_damage(amount: int) -> void:
 	health -= amount
+	health_changed.emit(health)
 	print("Vida del jugador: ", health)
 
 	if health <= 0:
