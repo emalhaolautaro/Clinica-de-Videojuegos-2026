@@ -23,6 +23,8 @@ var health: int
 # Nodos
 @onready var muzzle: Marker2D = $Muzzle
 
+#Señal Muerte
+signal died
 
 func _ready() -> void:
 	health = max_health
@@ -87,4 +89,5 @@ func take_damage(amount: int) -> void:
 
 func die() -> void:
 	print("El jugador murió")
+	died.emit()
 	queue_free()

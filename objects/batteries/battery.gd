@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+signal destroyed
+
 @export var max_health := 3
 var health: int
 
@@ -15,4 +17,5 @@ func take_damage(amount: int) -> void:
 
 func die() -> void:
 	print("Batería destruida")
+	destroyed.emit()
 	queue_free()

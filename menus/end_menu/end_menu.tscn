@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b0ignv505nof"]
+
+[ext_resource type="Script" uid="uid://brpqrhp0n6dgq" path="res://menus/end_menu/end_menu.gd" id="1_xoeva"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_rggsx"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_d6q8a"]
+
+[node name="EndMenu" type="Control" unique_id=1683810513]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_xoeva")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=169310147]
+layout_mode = 0
+offset_right = 645.0
+offset_bottom = 362.0
+color = Color(0.09923177, 0.09923177, 0.09923177, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=941167139]
+layout_mode = 0
+offset_left = 174.0
+offset_top = 77.0
+offset_right = 460.9565
+offset_bottom = 287.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1371456630]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ResultLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=167917249]
+layout_mode = 2
+text = "VICTORIA"
+horizontal_alignment = 1
+
+[node name="PrimaryButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1202832261]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4816845, 0.98518974, 0.8152707, 1)
+theme_override_colors/font_focus_color = Color(0.7176471, 0.11764706, 0.10980392, 1)
+theme_override_colors/font_pressed_color = Color(0.827451, 0.15686275, 0, 1)
+theme_override_colors/icon_normal_color = Color(0.49857008, 0.14240459, 0.08593454, 1)
+theme_override_styles/normal = SubResource("StyleBoxLine_rggsx")
+text = "REINTENTAR"
+icon_alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1531701801]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxLine_d6q8a")
+text = "MENU PRINCIPAL"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/PrimaryButton" to="." method="_on_primary_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

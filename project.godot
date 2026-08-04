@@ -11,15 +11,23 @@ config_version=5
 [application]
 
 config/name="Clinica-de-Videojuegos-2026"
-run/main_scene="res://levels/level.tscn"
+run/main_scene="uid://byehqtb7j1ujw"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*uid://c3th0mpys3ss3"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
 window/stretch/mode="canvas_items"
+
+[global_group]
+
+batteries=""
 
 [physics]
 
