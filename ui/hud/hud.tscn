@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://sptibfk0mv6o"]
 
-[ext_resource type="Texture2D" uid="uid://de766s656dnmu" path="res://ui/hud/assets/EmplyBar.png" id="1_4d6w6"]
+[ext_resource type="Texture2D" uid="uid://48nyt5gdckl0" path="res://ui/hud/assets/EmplyBar.png" id="1_4d6w6"]
 [ext_resource type="Script" uid="uid://c7uipvb0xsd4l" path="res://ui/hud/hud.gd" id="1_e0nub"]
-[ext_resource type="Texture2D" uid="uid://d2sml08d7wqan" path="res://ui/hud/assets/HealthFill.png" id="2_e0nub"]
-[ext_resource type="Texture2D" uid="uid://db7k2mx45kpx2" path="res://ui/hud/assets/EnrgyFill.png" id="4_w75iv"]
+[ext_resource type="Texture2D" uid="uid://yv3ycbsmy5c6" path="res://ui/hud/assets/HealthFill.png" id="2_e0nub"]
+[ext_resource type="Texture2D" uid="uid://bf4qq17mf0xqc" path="res://ui/hud/assets/EnrgyFill.png" id="4_w75iv"]
 
 [node name="HUD" type="CanvasLayer" unique_id=212758822]
 scale = Vector2(0.25, 0.25)

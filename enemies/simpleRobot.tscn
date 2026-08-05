@@ -3,34 +3,29 @@
 [ext_resource type="Script" uid="uid://c16rslbheopfn" path="res://enemies/simple_robot.gd" id="1_5w4hd"]
 [ext_resource type="Texture2D" uid="uid://dcnean5i264my" path="res://enemies/assets/godotrobot.png" id="2_q54yc"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rggsx"]
-radius = 6.0
-height = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q54yc"]
+size = Vector2(14.000001, 22)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d6q8a"]
-radius = 6.0
-height = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5w4hd"]
+size = Vector2(14.666668, 22)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1477524661]
-position = Vector2(23, -1)
 collision_layer = 2
 script = ExtResource("1_5w4hd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=535627544]
-position = Vector2(-22.999998, 0.99999994)
 scale = Vector2(0.07, 0.07)
 texture = ExtResource("2_q54yc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1590172292]
-position = Vector2(-24, 3)
+position = Vector2(0, 0)
 scale = Vector2(1.5, 1.5)
-shape = SubResource("CapsuleShape2D_rggsx")
+shape = SubResource("RectangleShape2D_q54yc")
 
 [node name="DamageArea" type="Area2D" parent="." unique_id=1238729919]
-position = Vector2(0, 3)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=560190195]
-position = Vector2(-24, 0)
+position = Vector2(0, 0)
 scale = Vector2(1.5, 1.5)
-shape = SubResource("CapsuleShape2D_d6q8a")
+shape = SubResource("RectangleShape2D_5w4hd")
