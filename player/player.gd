@@ -27,6 +27,7 @@ var energy: float
 
 # Nodos
 @onready var muzzle: Marker2D = $Muzzle
+@onready var sprite: Sprite2D = $Sprite2D
 
 #Señal Muerte
 signal died
@@ -84,6 +85,10 @@ func handle_horizontal_movement() -> void:
 	if direction != 0:
 		velocity.x = direction * speed
 		facing_direction = int(sign(direction))
+		if direction < 0:
+			sprite.flip_h = true
+		elif direction > 0:
+			sprite.flip_h = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
