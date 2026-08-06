@@ -8,7 +8,8 @@ radius = 14.0
 height = 62.0
 
 [node name="Battery" type="StaticBody2D" unique_id=787078769 groups=["batteries"]]
-collision_layer = 2
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("1_3ybg1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2056643706]
