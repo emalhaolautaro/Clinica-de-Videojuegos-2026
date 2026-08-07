@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://b3lor450adjjo" path="res://objects/batteries/assets/Bomb_1_Idle_000.png" id="2_tt681"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r8gpd"]
-radius = 14.0
-height = 62.0
+radius = 8.0
+height = 32.0
 
 [node name="Battery" type="StaticBody2D" unique_id=787078769 groups=["batteries"]]
 collision_layer = 16
@@ -13,10 +13,8 @@ collision_mask = 0
 script = ExtResource("1_3ybg1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2056643706]
-position = Vector2(0, 1.0000002)
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.10662252, 0.10662252)
 texture = ExtResource("2_tt681")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=25316620]
-position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_r8gpd")

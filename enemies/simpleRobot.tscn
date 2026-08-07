@@ -9,7 +9,7 @@ size = Vector2(14.000001, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5w4hd"]
 size = Vector2(14.666668, 22)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1477524661]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1477524661 groups=["enemies"]]
 collision_layer = 2
 script = ExtResource("1_5w4hd")
 
@@ -28,3 +28,9 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=560190195]
 scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_5w4hd")
+
+[node name="FloorDetector" type="RayCast2D" parent="." unique_id=685053012]
+position = Vector2(12, 8)
+target_position = Vector2(0, 20)
+
+[connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
