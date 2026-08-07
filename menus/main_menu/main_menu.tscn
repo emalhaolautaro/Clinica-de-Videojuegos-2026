@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://byehqtb7j1ujw"]
 
 [ext_resource type="Script" uid="uid://xuse5hcfuoht" path="res://menus/main_menu/main_menu.gd" id="1_8gy84"]
+[ext_resource type="AudioStream" uid="uid://c3p7cy5lng553" path="res://music/KHZ - MAIN MENU - 160 BPM Am.mp3" id="2_1nwmw"]
 
 [node name="MainMenu" type="Control" unique_id=1401944893]
 layout_mode = 3
@@ -38,6 +39,10 @@ text = "Jugar"
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1036670772]
 layout_mode = 2
 text = "Salir"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=879863639]
+stream = ExtResource("2_1nwmw")
+autoplay = true
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

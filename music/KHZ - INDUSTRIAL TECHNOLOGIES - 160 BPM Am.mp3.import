@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bqr75aoo67pji"
+path="res://.godot/imported/KHZ - INDUSTRIAL TECHNOLOGIES - 160 BPM Am.mp3-553f5166f98ead6a9fa4095229d8e5b4.mp3str"
+
+[deps]
+
+source_file="res://music/KHZ - INDUSTRIAL TECHNOLOGIES - 160 BPM Am.mp3"
+dest_files=["res://.godot/imported/KHZ - INDUSTRIAL TECHNOLOGIES - 160 BPM Am.mp3-553f5166f98ead6a9fa4095229d8e5b4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
