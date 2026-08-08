@@ -24,6 +24,7 @@ PauseMenu="*res://menus/pause_menu/pause_menu.tscn"
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
