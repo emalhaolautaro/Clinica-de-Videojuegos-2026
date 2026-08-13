@@ -5,7 +5,7 @@ enum State {
 	CHASE
 }
 
-@export var speed: float = 80.0
+@export var speed: float = 40.0
 @export var chase_distance: float = 180.0
 @export var max_vertical_distance: float = 40.0
 @export var max_health: int = 3

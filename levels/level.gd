@@ -9,6 +9,10 @@ var game_finished := false
 
 
 func _ready() -> void:
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if "player" in enemy:
+			enemy.player = player
+
 	var batteries := get_tree().get_nodes_in_group("batteries")
 	batteries_remaining = batteries.size()
 

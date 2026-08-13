@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bxysqmu8f2mw0"]
+
+[ext_resource type="Script" uid="uid://cp1ne2m3awaig" path="res://enemies/turret_enemy.gd" id="1_3defr"]
+[ext_resource type="Texture2D" uid="uid://bq6bvjdjvn524" path="res://enemies/assets/turret1-original.png" id="1_5nwje"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xorlj"]
+size = Vector2(74, 41)
+
+[node name="TurretEnemy" type="CharacterBody2D" unique_id=1638639517 groups=["enemies"]]
+collision_layer = 2
+script = ExtResource("1_3defr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=79262098]
+texture = ExtResource("1_5nwje")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1721410561]
+position = Vector2(0, 18.5)
+shape = SubResource("RectangleShape2D_xorlj")
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=517416398]
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=309176113]
+position = Vector2(35, 12)

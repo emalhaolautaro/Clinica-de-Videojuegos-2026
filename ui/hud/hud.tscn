@@ -6,24 +6,24 @@
 [ext_resource type="Texture2D" uid="uid://bf4qq17mf0xqc" path="res://ui/hud/assets/EnrgyFill.png" id="4_w75iv"]
 
 [node name="HUD" type="CanvasLayer" unique_id=212758822]
-scale = Vector2(0.25, 0.25)
-transform = Transform2D(0.25, 0, 0, 0.25, 0, 0)
+scale = Vector2(0.15, 0.15)
+transform = Transform2D(0.15, 0, 0, 0.15, 0, 0)
 script = ExtResource("1_e0nub")
 
 [node name="HealthBar" type="TextureProgressBar" parent="." unique_id=792270488]
-offset_left = 72.0
-offset_top = 116.0
-offset_right = 696.0
-offset_bottom = 241.0
+offset_left = 100.0
+offset_top = 119.99999
+offset_right = 724.0
+offset_bottom = 245.0
 texture_under = ExtResource("1_4d6w6")
 texture_progress = ExtResource("2_e0nub")
 texture_progress_offset = Vector2(10, 10)
 
 [node name="EnergyBar" type="TextureProgressBar" parent="." unique_id=485008383]
-offset_left = 72.0
-offset_top = 304.0
-offset_right = 696.0
-offset_bottom = 429.0
+offset_left = 100.0
+offset_top = 300.0
+offset_right = 724.0
+offset_bottom = 425.0
 texture_under = ExtResource("1_4d6w6")
 texture_progress = ExtResource("4_w75iv")
 texture_progress_offset = Vector2(10, 10)
