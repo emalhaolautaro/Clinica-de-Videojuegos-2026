@@ -4,19 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://cthfiijrjgca" path="res://player/assets/Protagonista.png" id="2_rkbax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hpit7"]
-size = Vector2(14, 52)
+size = Vector2(13, 42)
 
 [node name="Player" type="CharacterBody2D" unique_id=1274142064]
 collision_layer = 4
 script = ExtResource("1_yqg0j")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=567361827]
-scale = Vector2(0.06925676, 0.06925675)
+scale = Vector2(0.056250006, 0.056250002)
 texture = ExtResource("2_rkbax")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=723655350]
-position = Vector2(-1, 0)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_hpit7")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=453176098]
-position = Vector2(6, -10)
