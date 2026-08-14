@@ -434,7 +434,7 @@ tile_set = SubResource("TileSet_8cbh1")
 
 [node name="Player" parent="." unique_id=546298065 instance=ExtResource("1_abcde")]
 position = Vector2(171, 301)
-jump_velocity = -443.0
+jump_velocity = -500.0
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1535117555]
 

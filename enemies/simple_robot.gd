@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+const DISSOLVE_SHADER: Shader = preload("res://enemies/dissolve.gdshader")
+const DEATH_SHADER: Shader = preload("res://enemies/death_flash.gdshader")
+const PIXELATE_SHADER: Shader = preload("res://enemies/pixelate_death.gdshader")
+
 enum State {
 	PATROL,
 	CHASE
@@ -9,12 +13,15 @@ enum State {
 @export var chase_distance: float = 180.0
 @export var max_vertical_distance: float = 40.0
 @export var max_health: int = 3
+@export var dissolve_duration: float = 0.8
 
 var player: CharacterBody2D
 var direction: float = 1.0
 var state: State = State.PATROL
 var health: int
+var is_dying: bool = false
 
+@onready var sprite: Sprite2D = $Sprite2D
 @onready var floor_detector: RayCast2D = $FloorDetector
 
 var gravity: float = float(
@@ -24,6 +31,7 @@ var gravity: float = float(
 
 func _ready() -> void:
 	health = max_health
+	_setup_dissolve_shader()
 
 	if randf() < 0.5:
 		direction = -1.0
@@ -31,6 +39,31 @@ func _ready() -> void:
 		direction = 1.0
 
 	update_floor_detector()
+
+
+func _setup_dissolve_shader() -> void:
+	#Para el efecto de DISOLVE------------------------------------------------
+	#if not sprite:
+	#	return
+	#var shader_material := ShaderMaterial.new()
+	#shader_material.shader = DISSOLVE_SHADER
+	#var noise := FastNoiseLite.new()
+	#noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	#noise.frequency = 0.05
+	#var noise_tex := NoiseTexture2D.new()
+	#noise_tex.noise = noise
+	#noise_tex.width = 256
+	#noise_tex.height = 256
+	#shader_material.set_shader_parameter("noise_texture", noise_tex)
+	#shader_material.set_shader_parameter("dissolve_amount", 0.0)
+	#sprite.material = shader_material
+	#-------------------------------------------------------------------------
+	#Efecto de flash + fade y/o PIXELATE--------------------------------------
+	if not sprite:
+		return
+	var shader_material := ShaderMaterial.new()
+	shader_material.shader = DEATH_SHADER
+	sprite.material = shader_material
 
 
 func _physics_process(delta: float) -> void:
@@ -117,6 +150,9 @@ func update_floor_detector() -> void:
 
 
 func take_damage(amount: int) -> void:
+	if is_dying:
+		return
+
 	health -= amount
 	print("Enemigo recibió daño. Vida restante: ", health)
 
@@ -125,9 +161,48 @@ func take_damage(amount: int) -> void:
 
 
 func die() -> void:
-	queue_free()
+	if is_dying:
+		return
+	is_dying = true
 
+	# Desactivar lógica del enemigo
+	set_physics_process(false)
+
+	# Desactivar colisiones
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+	for child in get_children():
+		if child is Area2D:
+			child.set_collision_layer_value(1, false)
+			child.set_collision_mask_value(1, false)
+
+	var tween := create_tween()
+	tween.tween_method(_set_flash, 0.0, 1.0, 0.15)
+	tween.tween_method(_set_fade, 0.0, 1.0, 0.5)
+	tween.tween_callback(queue_free)
+
+#Para el efecto de disolve
+func _set_dissolve(value: float) -> void:
+	if sprite and sprite.material:
+		sprite.material.set_shader_parameter("dissolve_amount", value)
+
+#Para el efecto de flash
+func _set_flash(value: float) -> void:
+	if sprite and sprite.material:
+		sprite.material.set_shader_parameter("flash_amount", value)
+
+#Para el efecto de fade
+func _set_fade(value: float) -> void:
+	if sprite and sprite.material:
+		sprite.material.set_shader_parameter("fade_amount", value)
+
+#Para el efecto de pixelar
+func _set_progress(value: float) -> void:
+	if sprite and sprite.material:
+		sprite.material.set_shader_parameter("progress", value)
 
 func _on_damage_area_body_entered(body: Node2D) -> void:
+	if is_dying:
+		return
 	if body.has_method("take_damage"):
 		body.take_damage(1)
