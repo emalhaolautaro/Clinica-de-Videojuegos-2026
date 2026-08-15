@@ -14,12 +14,16 @@ enum State {
 @export var max_vertical_distance: float = 40.0
 @export var max_health: int = 3
 @export var dissolve_duration: float = 0.8
+@export var contact_damage: int = 1
+@export var damage_tick_interval: float = 1.0
 
 var player: CharacterBody2D
 var direction: float = 1.0
 var state: State = State.PATROL
 var health: int
 var is_dying: bool = false
+var _bodies_in_damage_area: Array[Node2D] = []
+var _damage_tick_timer: Timer
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var floor_detector: RayCast2D = $FloorDetector
@@ -39,6 +43,15 @@ func _ready() -> void:
 		direction = 1.0
 
 	update_floor_detector()
+
+	_damage_tick_timer = Timer.new()
+	_damage_tick_timer.wait_time = damage_tick_interval
+	_damage_tick_timer.timeout.connect(_on_damage_tick_timeout)
+	add_child(_damage_tick_timer)
+
+	var damage_area = $DamageArea
+	if damage_area:
+		damage_area.body_exited.connect(_on_damage_area_body_exited)
 
 
 func _setup_dissolve_shader() -> void:
@@ -167,6 +180,8 @@ func die() -> void:
 
 	# Desactivar lógica del enemigo
 	set_physics_process(false)
+	_damage_tick_timer.stop()
+	_bodies_in_damage_area.clear()
 
 	# Desactivar colisiones
 	set_collision_layer_value(1, false)
@@ -205,4 +220,27 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 	if is_dying:
 		return
 	if body.has_method("take_damage"):
-		body.take_damage(1)
+		body.take_damage(contact_damage)
+		if body not in _bodies_in_damage_area:
+			_bodies_in_damage_area.append(body)
+		if _damage_tick_timer.is_stopped():
+			_damage_tick_timer.start()
+
+
+func _on_damage_area_body_exited(body: Node2D) -> void:
+	_bodies_in_damage_area.erase(body)
+	if _bodies_in_damage_area.is_empty():
+		_damage_tick_timer.stop()
+
+
+func _on_damage_tick_timeout() -> void:
+	if is_dying:
+		_damage_tick_timer.stop()
+		return
+	for body in _bodies_in_damage_area.duplicate():
+		if is_instance_valid(body) and body.has_method("take_damage"):
+			body.take_damage(contact_damage)
+		else:
+			_bodies_in_damage_area.erase(body)
+	if _bodies_in_damage_area.is_empty():
+		_damage_tick_timer.stop()
