@@ -3,6 +3,15 @@
 [ext_resource type="Script" uid="uid://cp1ne2m3awaig" path="res://enemies/turret_enemy.gd" id="1_3defr"]
 [ext_resource type="Texture2D" uid="uid://bq6bvjdjvn524" path="res://enemies/assets/turret1-original.png" id="1_5nwje"]
 
+[sub_resource type="Gradient" id="Gradient_3defr"]
+offsets = PackedFloat32Array(0, 0.99759614, 1)
+colors = PackedColorArray(0.8389423, 0.8389423, 0.8389423, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ygakt"]
+gradient = SubResource("Gradient_3defr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xorlj"]
 size = Vector2(74, 41)
 
@@ -12,6 +21,15 @@ script = ExtResource("1_3defr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=79262098]
 texture = ExtResource("1_5nwje")
+
+[node name="AlertLight" type="PointLight2D" parent="." unique_id=1997973337]
+visibility_layer = 7
+position = Vector2(0, 19)
+color = Color(0.79071206, 0.12545064, 0.10725809, 1)
+energy = 0.0
+texture = SubResource("GradientTexture2D_ygakt")
+texture_scale = 3.0
+height = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1721410561]
 position = Vector2(0, 18.5)

@@ -12,10 +12,12 @@ var health: int
 var player: CharacterBody2D
 var direction: float = 1.0
 var is_dying: bool = false
+var is_alerting: bool = false
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var muzzle: Marker2D = $Muzzle
+@onready var alert_light: PointLight2D = $AlertLight
 
 var gravity: float = float(
 	ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -28,7 +30,7 @@ func _ready() -> void:
 
 	if shoot_timer:
 		shoot_timer.wait_time = shoot_interval
-		shoot_timer.timeout.connect(shoot_at_player)
+		shoot_timer.timeout.connect(prepare_to_shoot)
 		shoot_timer.start()
 
 
@@ -54,6 +56,19 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+func prepare_to_shoot() -> void:
+	if is_alerting:
+		return
+	is_alerting = true
+
+	var tween := create_tween()
+	tween.set_loops(2) # dos parpadeos
+	tween.tween_property(alert_light, "energy", 10.0, 0.15)
+	tween.tween_property(alert_light, "energy", 0.0, 0.15)
+
+	await get_tree().create_timer(0.7).timeout
+	shoot_at_player()
+	is_alerting = false
 
 func shoot_at_player() -> void:
 	if player == null or not is_instance_valid(player):
