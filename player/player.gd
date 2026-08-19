@@ -29,11 +29,14 @@ var health: int
 @export var max_energy := 4.0
 @export var energy_recharge_rate := 1.0
 var energy: float
+@export var reload_rate := 1.8
+var is_reloading = false
 
 
 # Nodos
 @onready var muzzle: Marker2D = $Muzzle
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var spark_particles: CPUParticles2D = $CPUParticles2D
 
 
 # Señal muerte
@@ -60,20 +63,15 @@ func _ready() -> void:
 	energy = max_energy
 	max_energy_changed.emit(max_energy)
 	energy_changed.emit(energy)
+	
+	_setup_spark_particles()
 
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	handle_jump()
 	handle_horizontal_movement()
-
-	if energy < max_energy:
-		energy = min(
-			energy + energy_recharge_rate * delta,
-			max_energy
-		)
-		energy_changed.emit(energy)
-
+	handle_energy(delta)
 	move_and_slide()
 
 
@@ -88,7 +86,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
 
 func handle_jump() -> void:
 	# Al tocar el piso recuperamos ambos saltos
@@ -126,7 +123,6 @@ func handle_horizontal_movement() -> void:
 			speed
 		)
 
-
 # Disparo
 
 func shoot() -> void:
@@ -155,6 +151,51 @@ func take_damage(amount: int) -> void:
 	if health <= 0:
 		die()
 
+# Partículas de recarga y energía
+func handle_energy(delta: float) -> void:
+	if energy >= max_energy:
+		is_reloading = false
+		if spark_particles:
+			spark_particles.emitting = false
+		return
+
+	if Input.is_key_pressed(KEY_R):
+		is_reloading = true
+		energy = min(energy + reload_rate * delta, max_energy)
+	else:
+		is_reloading = false
+		energy = min(energy + energy_recharge_rate * delta, max_energy)
+
+	if spark_particles:
+		spark_particles.emitting = is_reloading
+
+	energy_changed.emit(energy)
+
+func _setup_spark_particles() -> void:
+	if not spark_particles:
+		return
+	spark_particles.emitting = false
+	spark_particles.amount = 32
+	spark_particles.lifetime = 0.35
+	spark_particles.one_shot = false
+	spark_particles.explosiveness = 0.5
+	spark_particles.randomness = 0.8
+	spark_particles.spread = 180.0
+	spark_particles.direction = Vector2.UP
+	spark_particles.initial_velocity_min = 20.0
+	spark_particles.initial_velocity_max = 60.0
+	spark_particles.gravity = Vector2(0, 150)
+	spark_particles.scale_amount_min = 0.4
+	spark_particles.scale_amount_max = 0.7
+	spark_particles.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
+	var color_ramp := Gradient.new()
+	color_ramp.set_color(0, Color(1, 1, 0.6))       # amarillo eléctrico
+	color_ramp.add_point(0.5, Color(0.6, 0.9, 1.0)) # celeste eléctrico
+	color_ramp.set_color(1, Color(1, 1, 1, 0))      # fade a transparente
+	spark_particles.color_ramp = color_ramp
+
+# Muerte
 
 func die() -> void:
 	print("El jugador murió")
