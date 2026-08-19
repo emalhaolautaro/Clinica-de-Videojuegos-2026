@@ -3,6 +3,14 @@
 [ext_resource type="Script" uid="uid://c16rslbheopfn" path="res://enemies/simple_robot.gd" id="1_5w4hd"]
 [ext_resource type="Texture2D" uid="uid://dcnean5i264my" path="res://enemies/assets/godotrobot.png" id="2_q54yc"]
 
+[sub_resource type="Gradient" id="Gradient_d6q8a"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rggsx"]
+gradient = SubResource("Gradient_d6q8a")
+fill = 1
+fill_from = Vector2(0.5052083, 0.47743055)
+fill_to = Vector2(1, 0.9288194)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q54yc"]
 size = Vector2(14.000001, 22)
 
@@ -12,6 +20,15 @@ size = Vector2(14.666668, 22)
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1477524661 groups=["enemies"]]
 collision_layer = 2
 script = ExtResource("1_5w4hd")
+
+[node name="SpawnLight" type="PointLight2D" parent="." unique_id=762987894]
+visibility_layer = 7
+texture = SubResource("GradientTexture2D_rggsx")
+
+[node name="ElectricFlash" type="Line2D" parent="." unique_id=1333192038]
+visible = false
+visibility_layer = 7
+default_color = Color(0, 0.45490196, 0.7529412, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=535627544]
 scale = Vector2(0.07, 0.07)

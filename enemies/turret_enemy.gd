@@ -4,8 +4,7 @@ const ENEMY_BULLET_SCENE: PackedScene = preload("res://projectiles/enemy_bullet.
 const DISSOLVE_SHADER: Shader = preload("res://enemies/dissolve.gdshader")
 const DEATH_SHADER: Shader = preload("res://enemies/death_flash.gdshader")
 
-@export var max_health: int = 3
-@export var shoot_interval: float = 5.0
+@export var shoot_interval: float = 7.0
 @export var dissolve_duration: float = 0.8
 
 var health: int
@@ -25,7 +24,6 @@ var gravity: float = float(
 
 
 func _ready() -> void:
-	health = max_health
 	_setup_dissolve_shader()
 
 	if shoot_timer:
