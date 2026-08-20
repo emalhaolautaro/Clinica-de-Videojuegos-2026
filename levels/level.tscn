@@ -433,7 +433,7 @@ tile_map_data = PackedByteArray("AAACACIAAAAAAAAAAAADACIAAAAAAAAAAAAEACIAAAAAAAA
 tile_set = SubResource("TileSet_8cbh1")
 
 [node name="Player" parent="." unique_id=546298065 instance=ExtResource("1_abcde")]
-position = Vector2(171, 301)
+position = Vector2(140, 314)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1535117555]
 
@@ -442,23 +442,47 @@ position = Vector2(328, 303)
 script = ExtResource("2_hjsbj")
 
 [node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint1" unique_id=1814140400]
-wait_time = 5.0
+wait_time = 6.0
 autostart = true
 
 [node name="SpawnerPoint2" type="Marker2D" parent="EnemySpawner" unique_id=1820897061]
-position = Vector2(439, 178)
+position = Vector2(414, 177)
 script = ExtResource("2_hjsbj")
+count_own_enemies_only = true
+spawned_can_chase = false
 
 [node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint2" unique_id=1495468159]
-wait_time = 7.0
+wait_time = 5.0
 autostart = true
 
 [node name="SpawnerPoint3" type="Marker2D" parent="EnemySpawner" unique_id=777307115]
-position = Vector2(197, 178)
+position = Vector2(229, 178)
 script = ExtResource("2_hjsbj")
+count_own_enemies_only = true
+spawned_can_chase = false
 
 [node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint3" unique_id=1375701368]
-wait_time = 6.0
+wait_time = 5.0
+autostart = true
+
+[node name="SpawnerPoint4" type="Marker2D" parent="EnemySpawner" unique_id=417576210]
+position = Vector2(130, 103)
+script = ExtResource("2_hjsbj")
+count_own_enemies_only = true
+spawned_can_chase = false
+
+[node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint4" unique_id=253344931]
+wait_time = 5.0
+autostart = true
+
+[node name="SpawnerPoint5" type="Marker2D" parent="EnemySpawner" unique_id=58316458]
+position = Vector2(510, 96)
+script = ExtResource("2_hjsbj")
+count_own_enemies_only = true
+spawned_can_chase = false
+
+[node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint5" unique_id=1822813787]
+wait_time = 5.0
 autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=803380038]
@@ -473,7 +497,7 @@ position = Vector2(440, 175)
 max_health = 10
 
 [node name="Battery 3" parent="." unique_id=1361569264 instance=ExtResource("4_5mrsh")]
-position = Vector2(196, 174)
+position = Vector2(195, 175)
 max_health = 10
 
 [node name="Battery 4" parent="." unique_id=2027441000 instance=ExtResource("4_5mrsh")]
@@ -489,4 +513,3 @@ autoplay = true
 
 [node name="TurretEnemy" parent="." unique_id=1638639517 instance=ExtResource("10_ukwr8")]
 position = Vector2(321, 32)
-max_health = 5

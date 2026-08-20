@@ -27,6 +27,7 @@ enum State {
 @export var speed: float = 40.0
 @export var chase_distance: float = 180.0
 @export var max_vertical_distance: float = 40.0
+@export var can_chase: bool = true
 
 @export var max_health: int = 3
 @export var dissolve_duration: float = 0.8
@@ -370,6 +371,9 @@ func _hide_electric_flash() -> void:
 # ============================================================
 
 func update_state() -> void:
+	if not can_chase or player == null:
+		state = State.PATROL
+		return
 
 	if player == null:
 		state = State.PATROL
