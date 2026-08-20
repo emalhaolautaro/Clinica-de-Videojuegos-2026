@@ -15,15 +15,37 @@ offset_left = 100.0
 offset_top = 119.99999
 offset_right = 724.0
 offset_bottom = 245.0
+scale = Vector2(1, 0.5)
 texture_under = ExtResource("1_4d6w6")
 texture_progress = ExtResource("2_e0nub")
 texture_progress_offset = Vector2(10, 10)
 
 [node name="EnergyBar" type="TextureProgressBar" parent="." unique_id=485008383]
 offset_left = 100.0
-offset_top = 300.0
+offset_top = 213.33331
 offset_right = 724.0
-offset_bottom = 425.0
+offset_bottom = 338.3333
+scale = Vector2(1, 0.5)
 texture_under = ExtResource("1_4d6w6")
 texture_progress = ExtResource("4_w75iv")
 texture_progress_offset = Vector2(10, 10)
+
+[node name="SupercomputerHealthBar" type="TextureProgressBar" parent="." unique_id=139334743]
+offset_left = 1526.6666
+offset_top = 126.666664
+offset_right = 2150.6665
+offset_bottom = 259.99997
+scale = Vector2(2, 0.5)
+texture_under = ExtResource("1_4d6w6")
+texture_progress = ExtResource("2_e0nub")
+texture_progress_offset = Vector2(10, 10)
+
+[node name="SupercomputerLabel" type="Label" parent="SupercomputerHealthBar" unique_id=2006249315]
+layout_mode = 0
+offset_left = 16.666666
+offset_top = 13.333332
+offset_right = 276.66666
+offset_bottom = 47.333332
+scale = Vector2(0.8, 3)
+theme_override_font_sizes/font_size = 24
+text = "SUPERCOMPUTADORA"

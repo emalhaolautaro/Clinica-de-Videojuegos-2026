@@ -452,7 +452,7 @@ count_own_enemies_only = true
 spawned_can_chase = false
 
 [node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint2" unique_id=1495468159]
-wait_time = 5.0
+wait_time = 6.0
 autostart = true
 
 [node name="SpawnerPoint3" type="Marker2D" parent="EnemySpawner" unique_id=777307115]
@@ -462,7 +462,7 @@ count_own_enemies_only = true
 spawned_can_chase = false
 
 [node name="Timer" type="Timer" parent="EnemySpawner/SpawnerPoint3" unique_id=1375701368]
-wait_time = 5.0
+wait_time = 6.0
 autostart = true
 
 [node name="SpawnerPoint4" type="Marker2D" parent="EnemySpawner" unique_id=417576210]
@@ -513,3 +513,4 @@ autoplay = true
 
 [node name="TurretEnemy" parent="." unique_id=1638639517 instance=ExtResource("10_ukwr8")]
 position = Vector2(321, 32)
+shoot_interval = 8.0
