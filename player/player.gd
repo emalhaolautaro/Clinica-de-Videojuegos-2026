@@ -37,6 +37,14 @@ var is_reloading = false
 @onready var muzzle: Marker2D = $Muzzle
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var spark_particles: CPUParticles2D = $CPUParticles2D
+@onready var flashlight: PointLight2D = $Flashlight
+
+# Flashlight de recarga
+@export var flashlight_min_energy := 0.6
+@export var flashlight_max_energy := 1.4
+@export var flashlight_flicker_speed := 15.0
+
+var _flashlight_target_energy := 1.0
 
 
 # Señal muerte
@@ -63,6 +71,9 @@ func _ready() -> void:
 	energy = max_energy
 	max_energy_changed.emit(max_energy)
 	energy_changed.emit(energy)
+	
+	if flashlight:
+		flashlight.energy = 0.0
 	
 	_setup_spark_particles()
 
@@ -157,6 +168,8 @@ func handle_energy(delta: float) -> void:
 		is_reloading = false
 		if spark_particles:
 			spark_particles.emitting = false
+		if flashlight:
+			flashlight.energy = 0.0
 		return
 
 	if Input.is_key_pressed(KEY_R):
@@ -165,11 +178,32 @@ func handle_energy(delta: float) -> void:
 	else:
 		is_reloading = false
 		energy = min(energy + energy_recharge_rate * delta, max_energy)
-
+	
 	if spark_particles:
 		spark_particles.emitting = is_reloading
+		
+	if flashlight:
+		if is_reloading:
+			_update_flashlight_flicker(delta)
+		else:
+			flashlight.energy = 0.0
 
 	energy_changed.emit(energy)
+
+func _update_flashlight_flicker(delta: float) -> void:
+	if randf() < 0.3:
+		_flashlight_target_energy = randf_range(
+			flashlight_min_energy,
+			flashlight_max_energy
+		)
+
+	flashlight.energy = lerp(
+		flashlight.energy,
+		_flashlight_target_energy,
+		flashlight_flicker_speed * delta
+	)
+	
+	print("flashlight energy: ", flashlight.energy)
 
 func _setup_spark_particles() -> void:
 	if not spark_particles:
