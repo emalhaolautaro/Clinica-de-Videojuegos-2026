@@ -19,13 +19,12 @@ color = Color(0.2065543, 0.2065543, 0.20655426, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1478775882]
 layout_mode = 0
-offset_left = 224.0
-offset_top = 113.0
-offset_right = 415.0
-offset_bottom = 153.0
+offset_right = 640.0
+offset_bottom = 360.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=671878826]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=665295030]
 layout_mode = 2
@@ -36,13 +35,69 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Jugar"
 
+[node name="HowToPlayButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1849201942]
+layout_mode = 2
+text = "Cómo Jugar"
+
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1036670772]
 layout_mode = 2
 text = "Salir"
+
+[node name="HowToPlayContainer" type="CenterContainer" parent="." unique_id=1948271038]
+visible = false
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HowToPlayContainer" unique_id=1294829103]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="RichTextLabel" parent="HowToPlayContainer/VBoxContainer" unique_id=1829471920]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+bbcode_enabled = true
+text = "[color=#7EC8E3][b]CÓMO JUGAR[/b][/color]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ObjectiveTitle" type="RichTextLabel" parent="HowToPlayContainer/VBoxContainer" unique_id=1738291049]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#7EC8E3][b]OBJETIVO[/b][/color]"
+fit_content = true
+
+[node name="ObjectiveText" type="Label" parent="HowToPlayContainer/VBoxContainer" unique_id=1629481923]
+layout_mode = 2
+text = "Destruí todas las baterías del nivel para ganar. Evitá
+a los enemigos y no dejés que tu vida llegue a 0."
+
+[node name="ControlsTitle" type="RichTextLabel" parent="HowToPlayContainer/VBoxContainer" unique_id=1528391024]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#7EC8E3][b]CONTROLES[/b][/color]"
+fit_content = true
+
+[node name="ControlsText" type="RichTextLabel" parent="HowToPlayContainer/VBoxContainer" unique_id=644601392]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#A8D8EA][b] Moverse: [/b][/color] Flechas Izquierda / Derecha [img=35x35]res://menus/key_icons/keyboard_arrows_horizontal_outline.png[/img]
+[color=#A8D8EA][b] Saltar / Doble Salto: [/b][/color] Flecha Arriba [img=20x20]res://menus/key_icons/keyboard_arrow_up.png[/img]
+[color=#A8D8EA][b] Disparar: [/b][/color] Tecla [img=20x20]res://menus/key_icons/keyboard_f.png[/img] (consume energía)
+[color=#A8D8EA][b] Recargar energía rápido: [/b][/color] Mantener tecla [img=20x20]res://menus/key_icons/keyboard_r.png[/img]
+[color=#A8D8EA][b] Pausa: [/b][/color] Teclas [img=20x20]res://menus/key_icons/keyboard_p.png[/img] / [img=20x20]res://menus/key_icons/keyboard_escape.png[/img] "
+fit_content = true
+
+[node name="BackButton" type="Button" parent="HowToPlayContainer/VBoxContainer" unique_id=1328471920]
+layout_mode = 2
+text = "Volver"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=879863639]
 stream = ExtResource("2_1nwmw")
 autoplay = true
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="HowToPlayContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

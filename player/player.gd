@@ -77,7 +77,7 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.keycode == KEY_J and event.pressed and not event.echo:
+		if event.keycode == KEY_F and event.pressed and not event.echo:
 			shoot()
 
 
