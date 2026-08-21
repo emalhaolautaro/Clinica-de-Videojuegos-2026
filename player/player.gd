@@ -31,13 +31,15 @@ var health: int
 var energy: float
 @export var reload_rate := 1.8
 var is_reloading = false
+var is_shooting = false
 
 
 # Nodos
 @onready var muzzle: Marker2D = $Muzzle
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var spark_particles: CPUParticles2D = $CPUParticles2D
 @onready var flashlight: PointLight2D = $Flashlight
+@onready var shoot_sfx: AudioStreamPlayer2D = $ShootSFX
 
 # Flashlight de recarga
 @export var flashlight_min_energy := 0.6
@@ -76,6 +78,9 @@ func _ready() -> void:
 		flashlight.energy = 0.0
 	
 	_setup_spark_particles()
+	
+	if sprite:
+		sprite.animation_finished.connect(_on_animation_finished)
 
 
 func _physics_process(delta: float) -> void:
@@ -104,7 +109,6 @@ func handle_jump() -> void:
 		jumps_left = max_jumps
 
 	if Input.is_action_just_pressed("ui_up") and jumps_left > 0:
-
 		# Primer salto
 		if jumps_left == max_jumps:
 			velocity.y = jump_velocity
@@ -127,12 +131,17 @@ func handle_horizontal_movement() -> void:
 			sprite.flip_h = true
 		elif direction > 0:
 			sprite.flip_h = false
+
+		if not is_shooting:
+			sprite.play("run")
 	else:
 		velocity.x = move_toward(
 			velocity.x,
 			0,
 			speed
 		)
+		if not is_shooting:
+			sprite.play("idle")
 
 # Disparo
 
@@ -140,16 +149,24 @@ func shoot() -> void:
 	if energy < 1.0:
 		return
 
+	is_shooting = true
+	sprite.play("shoot")
+	shoot_sfx.pitch_scale = randf_range(0.95, 1.05)
+	shoot_sfx.play()
 	energy -= 1.0
 	energy_changed.emit(energy)
 
 	var bullet = BULLET_SCENE.instantiate()
+	bullet.direction = facing_direction
+	bullet.global_position = muzzle.global_position
 
 	get_tree().current_scene.add_child(bullet)
 
-	bullet.global_position = muzzle.global_position
-	bullet.direction = facing_direction
 
+func _on_animation_finished() -> void:
+	if sprite.animation == "shoot":
+		is_shooting = false
+	
 
 # Vida
 
@@ -224,9 +241,9 @@ func _setup_spark_particles() -> void:
 	spark_particles.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 	var color_ramp := Gradient.new()
-	color_ramp.set_color(0, Color(1, 1, 0.6))       # amarillo eléctrico
+	color_ramp.set_color(0, Color(1, 1, 0.6)) # amarillo eléctrico
 	color_ramp.add_point(0.5, Color(0.6, 0.9, 1.0)) # celeste eléctrico
-	color_ramp.set_color(1, Color(1, 1, 1, 0))      # fade a transparente
+	color_ramp.set_color(1, Color(1, 1, 1, 0)) # fade a transparente
 	spark_particles.color_ramp = color_ramp
 
 # Muerte

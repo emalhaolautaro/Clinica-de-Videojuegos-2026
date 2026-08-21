@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dw6xy2vf7iehv"]
 
 [ext_resource type="Script" uid="uid://c16rslbheopfn" path="res://enemies/simple_robot.gd" id="1_5w4hd"]
-[ext_resource type="Texture2D" uid="uid://dcnean5i264my" path="res://enemies/assets/godotrobot.png" id="2_q54yc"]
+[ext_resource type="Texture2D" uid="uid://dwe4406xn7mku" path="res://enemies/assets/Enemigo-Amele-1B.png" id="2_5w4hd"]
 
 [sub_resource type="Gradient" id="Gradient_d6q8a"]
 
@@ -12,10 +12,10 @@ fill_from = Vector2(0.5052083, 0.47743055)
 fill_to = Vector2(1, 0.9288194)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q54yc"]
-size = Vector2(14.000001, 22)
+size = Vector2(20.666668, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5w4hd"]
-size = Vector2(14.666668, 22)
+size = Vector2(22, 23.666668)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1477524661 groups=["enemies"]]
 collision_layer = 2
@@ -31,10 +31,11 @@ visibility_layer = 7
 default_color = Color(0, 0.45490196, 0.7529412, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=535627544]
-scale = Vector2(0.07, 0.07)
-texture = ExtResource("2_q54yc")
+scale = Vector2(0.077462845, 0.077462845)
+texture = ExtResource("2_5w4hd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1590172292]
+position = Vector2(0.49999976, -0.50000024)
 scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_q54yc")
 
@@ -43,6 +44,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=560190195]
+position = Vector2(-0.50000095, -1.2500002)
 scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_5w4hd")
 

@@ -113,6 +113,7 @@ func _ready() -> void:
 		direction = 1.0
 
 	update_floor_detector()
+	_update_sprite_direction()
 
 
 	# --------------------------------------------------------
@@ -162,7 +163,6 @@ func _ready() -> void:
 # ============================================================
 
 func _setup_dissolve_shader() -> void:
-
 	# Para el efecto de DISSOLVE
 	#
 	#if not sprite:
@@ -191,10 +191,7 @@ func _setup_dissolve_shader() -> void:
 	#)
 	#
 	#sprite.material = shader_material
-
-
 	# Efecto de flash + fade
-
 	if not sprite:
 		return
 
@@ -209,7 +206,6 @@ func _setup_dissolve_shader() -> void:
 # ============================================================
 
 func _physics_process(delta: float) -> void:
-
 	# La gravedad sigue funcionando durante el spawn
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -239,7 +235,6 @@ func _physics_process(delta: float) -> void:
 # ============================================================
 
 func _start_spawn_effect() -> void:
-
 	is_spawning = true
 
 
@@ -320,7 +315,6 @@ func _finish_spawn() -> void:
 # ============================================================
 
 func _show_electric_flash() -> void:
-
 	if not electric_flash:
 		return
 
@@ -361,7 +355,6 @@ func _show_electric_flash() -> void:
 
 
 func _hide_electric_flash() -> void:
-
 	electric_flash.visible = false
 	electric_flash.modulate.a = 1.0
 
@@ -404,7 +397,6 @@ func update_state() -> void:
 # ============================================================
 
 func patrol() -> void:
-
 	if not is_on_floor():
 		velocity.x = 0.0
 		return
@@ -425,7 +417,6 @@ func patrol() -> void:
 # ============================================================
 
 func chase_player() -> void:
-
 	if not is_on_floor():
 		velocity.x = 0.0
 		return
@@ -437,14 +428,13 @@ func chase_player() -> void:
 
 
 	if target_direction != 0.0 and target_direction != direction:
-
 		direction = target_direction
 		update_floor_detector()
+		_update_sprite_direction()
 
 
 	# No se tira del borde para perseguir al jugador
 	if not floor_detector.is_colliding():
-
 		velocity.x = 0.0
 		return
 
@@ -457,16 +447,25 @@ func chase_player() -> void:
 # ============================================================
 
 func change_direction() -> void:
-
 	direction *= -1.0
 	update_floor_detector()
+	_update_sprite_direction()
 
 
 func update_floor_detector() -> void:
-
 	floor_detector.position.x = (
 		abs(floor_detector.position.x) * direction
 	)
+
+
+# ============================================================
+# VOLTEAR SPRITE
+# ============================================================
+
+func _update_sprite_direction() -> void:
+	# direction == 1.0  → mirando a la derecha (flip_h = false)
+	# direction == -1.0 → mirando a la izquierda (flip_h = true)
+	sprite.flip_h = direction > 0.0
 
 
 # ============================================================
@@ -474,7 +473,6 @@ func update_floor_detector() -> void:
 # ============================================================
 
 func take_damage(amount: int) -> void:
-
 	if is_dying or is_spawning:
 		return
 
@@ -490,7 +488,6 @@ func take_damage(amount: int) -> void:
 
 	# Retroceso al recibir un disparo
 	if player != null:
-
 		var knockback_direction: float = signf(
 			global_position.x - player.global_position.x
 		)
@@ -501,8 +498,7 @@ func take_damage(amount: int) -> void:
 		velocity.x = knockback_direction * damage_knockback
 
 	else:
-
-		velocity.x = -direction * damage_knockback
+		velocity.x = - direction * damage_knockback
 
 
 	velocity.y = damage_jump
@@ -521,7 +517,6 @@ func take_damage(amount: int) -> void:
 # ============================================================
 
 func die() -> void:
-
 	if is_dying:
 		return
 
@@ -547,9 +542,7 @@ func die() -> void:
 
 
 	for child in get_children():
-
 		if child is Area2D:
-
 			child.set_collision_layer_value(
 				1,
 				false
@@ -589,9 +582,7 @@ func die() -> void:
 # ============================================================
 
 func _set_dissolve(value: float) -> void:
-
 	if sprite and sprite.material:
-
 		sprite.material.set_shader_parameter(
 			"dissolve_amount",
 			value
@@ -599,9 +590,7 @@ func _set_dissolve(value: float) -> void:
 
 
 func _set_flash(value: float) -> void:
-
 	if sprite and sprite.material:
-
 		sprite.material.set_shader_parameter(
 			"flash_amount",
 			value
@@ -609,9 +598,7 @@ func _set_flash(value: float) -> void:
 
 
 func _set_fade(value: float) -> void:
-
 	if sprite and sprite.material:
-
 		sprite.material.set_shader_parameter(
 			"fade_amount",
 			value
@@ -619,9 +606,7 @@ func _set_fade(value: float) -> void:
 
 
 func _set_progress(value: float) -> void:
-
 	if sprite and sprite.material:
-
 		sprite.material.set_shader_parameter(
 			"progress",
 			value
@@ -633,13 +618,11 @@ func _set_progress(value: float) -> void:
 # ============================================================
 
 func _on_damage_area_body_entered(body: Node2D) -> void:
-
 	if is_dying or is_spawning:
 		return
 
 
 	if body.has_method("take_damage"):
-
 		# El robot hace daño al jugador
 		body.take_damage(contact_damage)
 
@@ -677,12 +660,10 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 		# ----------------------------------------------------
 
 		if body not in _bodies_in_damage_area:
-
 			_bodies_in_damage_area.append(body)
 
 
 		if _damage_tick_timer.is_stopped():
-
 			_damage_tick_timer.start()
 
 
@@ -691,12 +672,10 @@ func _on_damage_area_body_entered(body: Node2D) -> void:
 # ============================================================
 
 func _on_damage_area_body_exited(body: Node2D) -> void:
-
 	_bodies_in_damage_area.erase(body)
 
 
 	if _bodies_in_damage_area.is_empty():
-
 		_damage_tick_timer.stop()
 
 
@@ -705,20 +684,16 @@ func _on_damage_area_body_exited(body: Node2D) -> void:
 # ============================================================
 
 func _on_damage_tick_timeout() -> void:
-
 	if is_dying:
-
 		_damage_tick_timer.stop()
 		return
 
 
 	for body in _bodies_in_damage_area.duplicate():
-
 		if (
 			is_instance_valid(body)
 			and body.has_method("take_damage")
 		):
-
 			# Daño periódico
 			body.take_damage(contact_damage)
 
@@ -745,10 +720,8 @@ func _on_damage_tick_timeout() -> void:
 			velocity.y = contact_jump
 
 		else:
-
 			_bodies_in_damage_area.erase(body)
 
 
 	if _bodies_in_damage_area.is_empty():
-
 		_damage_tick_timer.stop()

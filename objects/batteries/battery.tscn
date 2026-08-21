@@ -1,20 +1,39 @@
 [gd_scene format=3 uid="uid://cvacfntm6nkyv"]
 
 [ext_resource type="Script" uid="uid://d4a8nxqdmfi10" path="res://objects/batteries/battery.gd" id="1_3ybg1"]
-[ext_resource type="Texture2D" uid="uid://b3lor450adjjo" path="res://objects/batteries/assets/Bomb_1_Idle_000.png" id="2_tt681"]
+[ext_resource type="Texture2D" uid="uid://cl6hs45lugbpi" path="res://objects/batteries/assets/Bateria-Apagada-1.png" id="2_tt681"]
+[ext_resource type="AudioStream" uid="uid://chlo68fs5pusb" path="res://music/SFX JUAN WATTS - Explosión baterías.wav" id="3_tt681"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r8gpd"]
-radius = 8.0
-height = 32.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_pb8y7"]
+radius = 13.0
+
+[sub_resource type="Gradient" id="Gradient_tt681"]
+offsets = PackedFloat32Array(0.0072815535, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xorlj"]
+gradient = SubResource("Gradient_tt681")
+fill = 1
+fill_from = Vector2(0.49475524, 0.4597902)
 
 [node name="Battery" type="StaticBody2D" unique_id=787078769 groups=["batteries"]]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("1_3ybg1")
+min_light_energy = 1.0
+max_light_energy = 3.6
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2056643706]
+position = Vector2(62.999996, 36.999996)
 scale = Vector2(0.10662252, 0.10662252)
 texture = ExtResource("2_tt681")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=25316620]
-shape = SubResource("CapsuleShape2D_r8gpd")
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_pb8y7")
+
+[node name="ExploidSFX" type="AudioStreamPlayer2D" parent="." unique_id=910983506]
+stream = ExtResource("3_tt681")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=125668432]
+texture = SubResource("GradientTexture2D_xorlj")
