@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://xuse5hcfuoht" path="res://menus/main_menu/main_menu.gd" id="1_8gy84"]
 [ext_resource type="AudioStream" uid="uid://c3p7cy5lng553" path="res://music/KHZ - MAIN MENU - 160 BPM Am.mp3" id="2_1nwmw"]
+[ext_resource type="Texture2D" uid="uid://dpmyp7t56thxf" path="res://menus/main_menu/Menu.png" id="2_oic2i"]
+[ext_resource type="Script" uid="uid://d2n26q3lpboet" path="res://menus/main_menu/lightning_effects.gd" id="3_vu5tu"]
+[ext_resource type="AudioStream" uid="uid://b2f38aw43hc08" path="res://music/SFX JUAN WATTS - Menú.wav" id="4_ml8bw"]
 
 [node name="MainMenu" type="Control" unique_id=1401944893]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 1
 script = ExtResource("1_8gy84")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1198352867]
@@ -15,36 +19,44 @@ propagate_maximum_size = true
 layout_mode = 0
 offset_right = 641.0
 offset_bottom = 360.0
-color = Color(0.2065543, 0.2065543, 0.20655426, 1)
+color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Sprite2D" parent="." unique_id=599771186]
+position = Vector2(321.00003, 181.5)
+scale = Vector2(0.25390628, 0.2590278)
+texture = ExtResource("2_oic2i")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1478775882]
+z_index = 1
 layout_mode = 0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -1.0
+offset_top = 35.0
+offset_right = 639.0
+offset_bottom = 395.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=671878826]
 layout_mode = 2
+mouse_behavior_recursive = 2
 theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=665295030]
-layout_mode = 2
-text = "El ascenso de Juan Watts"
-horizontal_alignment = 1
 
 [node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1991262431]
 layout_mode = 2
+mouse_filter = 1
 text = "Jugar"
 
 [node name="HowToPlayButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1849201942]
 layout_mode = 2
+mouse_filter = 1
 text = "Cómo Jugar"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1036670772]
 layout_mode = 2
+mouse_filter = 1
 text = "Salir"
 
 [node name="HowToPlayContainer" type="CenterContainer" parent="." unique_id=1948271038]
 visible = false
+z_index = 1
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 360.0
@@ -91,11 +103,23 @@ fit_content = true
 
 [node name="BackButton" type="Button" parent="HowToPlayContainer/VBoxContainer" unique_id=1328471920]
 layout_mode = 2
+mouse_filter = 1
 text = "Volver"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=879863639]
 stream = ExtResource("2_1nwmw")
 autoplay = true
+
+[node name="LightningEffects" type="Node2D" parent="." unique_id=1172275969]
+script = ExtResource("3_vu5tu")
+
+[node name="MouseBolt" type="Line2D" parent="LightningEffects" unique_id=1428971607]
+
+[node name="BackgroundBoltTimer" type="Timer" parent="LightningEffects" unique_id=1099020982]
+one_shot = true
+
+[node name="ClickSFX" type="AudioStreamPlayer2D" parent="LightningEffects" unique_id=957552463]
+stream = ExtResource("4_ml8bw")
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]

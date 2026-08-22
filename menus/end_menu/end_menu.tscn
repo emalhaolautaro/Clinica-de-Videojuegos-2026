@@ -1,21 +1,25 @@
 [gd_scene format=3 uid="uid://b0ignv505nof"]
 
 [ext_resource type="Script" uid="uid://brpqrhp0n6dgq" path="res://menus/end_menu/end_menu.gd" id="1_xoeva"]
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_rggsx"]
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_d6q8a"]
+[ext_resource type="AudioStream" uid="uid://b2f38aw43hc08" path="res://music/SFX JUAN WATTS - Menú.wav" id="2_372us"]
+[ext_resource type="Texture2D" uid="uid://dpmyp7t56thxf" path="res://menus/main_menu/Menu.png" id="2_kkh3k"]
 
 [node name="EndMenu" type="Control" unique_id=1683810513]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 1
 script = ExtResource("1_xoeva")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=169310147]
 layout_mode = 0
 offset_right = 645.0
 offset_bottom = 362.0
-color = Color(0.09923177, 0.09923177, 0.09923177, 1)
+color = Color(0.00039445335, 0.00039445335, 0.00039445335, 1)
+
+[node name="Menu" type="Sprite2D" parent="." unique_id=1448061458]
+position = Vector2(322.44443, 180.5)
+scale = Vector2(0.2559028, 0.25902778)
+texture = ExtResource("2_kkh3k")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=941167139]
 layout_mode = 0
@@ -35,18 +39,22 @@ horizontal_alignment = 1
 
 [node name="PrimaryButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1202832261]
 layout_mode = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(0.4816845, 0.98518974, 0.8152707, 1)
 theme_override_colors/font_focus_color = Color(0.7176471, 0.11764706, 0.10980392, 1)
 theme_override_colors/font_pressed_color = Color(0.827451, 0.15686275, 0, 1)
 theme_override_colors/icon_normal_color = Color(0.49857008, 0.14240459, 0.08593454, 1)
-theme_override_styles/normal = SubResource("StyleBoxLine_rggsx")
 text = "REINTENTAR"
 icon_alignment = 1
 
 [node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1531701801]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxLine_d6q8a")
+mouse_filter = 1
 text = "MENU PRINCIPAL"
+autowrap_trim_flags = 0
+
+[node name="ClickSFX" type="AudioStreamPlayer2D" parent="." unique_id=322691123]
+stream = ExtResource("2_372us")
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PrimaryButton" to="." method="_on_primary_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

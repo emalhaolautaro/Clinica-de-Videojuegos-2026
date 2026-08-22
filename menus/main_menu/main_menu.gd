@@ -2,6 +2,7 @@ extends Control
 
 @onready var main_container: Control = $CenterContainer
 @onready var how_to_play_container: Control = $HowToPlayContainer
+@onready var background = $Menu
 
 
 func _on_play_button_pressed() -> void:
@@ -10,11 +11,13 @@ func _on_play_button_pressed() -> void:
 
 func _on_how_to_play_button_pressed() -> void:
 	main_container.visible = false
+	background.visible = false
 	how_to_play_container.visible = true
 
 
 func _on_back_button_pressed() -> void:
 	how_to_play_container.visible = false
+	background.visible = true
 	main_container.visible = true
 
 
