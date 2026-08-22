@@ -434,6 +434,7 @@ tile_set = SubResource("TileSet_8cbh1")
 
 [node name="Player" parent="." unique_id=546298065 instance=ExtResource("1_abcde")]
 position = Vector2(140, 314)
+jump_velocity = -370.0
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=1535117555]
 
@@ -508,7 +509,7 @@ max_health = 5
 
 [node name="Battery 4" parent="." unique_id=2027441000 instance=ExtResource("4_5mrsh")]
 z_index = -1
-position = Vector2(460, 92.00001)
+position = Vector2(460, 92)
 scale = Vector2(2.5, 2.5)
 max_health = 3
 

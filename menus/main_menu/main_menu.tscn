@@ -49,6 +49,11 @@ layout_mode = 2
 mouse_filter = 1
 text = "Cómo Jugar"
 
+[node name="CreditsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "Créditos"
+
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1036670772]
 layout_mode = 2
 mouse_filter = 1
@@ -106,6 +111,61 @@ layout_mode = 2
 mouse_filter = 1
 text = "Volver"
 
+[node name="CreditsContainer" type="CenterContainer" parent="."]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(500, 0)
+theme_override_constants/separation = 10
+
+[node name="Title" type="RichTextLabel" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+bbcode_enabled = true
+text = "[color=#7EC8E3][b]CRÉDITOS[/b][/color]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 5)
+
+[node name="MusicCredit" type="RichTextLabel" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#A8D8EA][b]Música y SFX[/b][/color]\nKHZ"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ArtCredit" type="RichTextLabel" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#A8D8EA][b]Arte 2D[/b][/color]\nVictorio Lemus"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ProgrammingCredit" type="RichTextLabel" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=#A8D8EA][b]Programación[/b][/color]\nLautaro Uriel Emalhao\nMartín Lautaro Gomez Ramos"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 5)
+
+[node name="BackButton" type="Button" parent="CreditsContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "Volver"
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=879863639]
 stream = ExtResource("2_1nwmw")
 autoplay = true
@@ -123,5 +183,7 @@ stream = ExtResource("4_ml8bw")
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="HowToPlayContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="CreditsContainer/VBoxContainer/BackButton" to="." method="_on_credits_back_button_pressed"]

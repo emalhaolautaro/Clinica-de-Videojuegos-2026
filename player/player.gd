@@ -8,8 +8,8 @@ const BULLET_SCENE: PackedScene = preload("res://projectiles/bullet.tscn")
 # Movimiento
 @export var speed := 150.0
 
-var jump_velocity := -450.0
-var second_jump_multiplier := 0.75
+@export var jump_velocity := -350.0
+@export var second_jump_multiplier := 0.65
 
 var gravity: float = ProjectSettings.get_setting(
 	"physics/2d/default_gravity"
@@ -164,11 +164,22 @@ func handle_horizontal_movement() -> void:
 # Así ninguna otra función pelea por controlar sprite.play().
 
 func handle_animation() -> void:
+	# Seguridad: si is_shooting está activo pero la animación actual ya no es
+	# "shoot", significa que fue interrumpida por otra llamada a sprite.play()
+	# y animation_finished nunca se va a disparar. Reseteamos el flag.
+	if is_shooting and sprite.animation != "shoot":
+		is_shooting = false
+
 	if is_shooting:
 		return
 
-	# jump_prep se deja terminar sus 3 frames sin que nada la
-	# interrumpa, incluso si ya estamos en el aire.
+	# Seguridad: si is_jump_prepping está activo pero la animación ya no es
+	# "jump_prep", también fue interrumpida. Aplicamos el impulso pendiente
+	# y reseteamos el flag para no bloquear el personaje.
+	if is_jump_prepping and sprite.animation != "jump_prep":
+		is_jump_prepping = false
+		velocity.y = _pending_jump_velocity
+
 	if is_jump_prepping:
 		return
 
@@ -189,6 +200,10 @@ func shoot() -> void:
 	if energy < 1.0:
 		return
 
+	# Si hay una animación de disparo previa en curso, la interrumpimos
+	# limpiamente antes de empezar la nueva.
+	is_shooting = false
+
 	is_shooting = true
 	sprite.play("shoot")
 	shoot_sfx.pitch_scale = randf_range(0.95, 1.05)
@@ -208,9 +223,14 @@ func _on_animation_finished() -> void:
 	if sprite.animation == "shoot":
 		is_shooting = false
 	elif sprite.animation == "jump_prep":
+		# Si estabamos disparando cuando terminó jump_prep, mantenemos
+		# is_shooting = true para que la animación de disparo continúe
+		# (o se limpie sola al terminar). No reseteamos is_shooting aquí.
 		is_jump_prepping = false
 		velocity.y = _pending_jump_velocity
-		sprite.play("jump_air")
+		# Solo volvemos a jump_air si no estamos disparando
+		if not is_shooting:
+			sprite.play("jump_air")
 		jump_sfx.play()
 	
 
