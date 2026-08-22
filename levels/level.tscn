@@ -489,21 +489,25 @@ autostart = true
 position = Vector2(321, 180)
 
 [node name="Battery 1" parent="." unique_id=787078769 instance=ExtResource("4_5mrsh")]
+z_index = -1
 position = Vector2(171, 92)
 scale = Vector2(2.5, 2.5)
 max_health = 5
 
 [node name="Battery 2" parent="." unique_id=365506501 instance=ExtResource("4_5mrsh")]
+z_index = -1
 position = Vector2(439, 175)
 scale = Vector2(1.5, 1.5)
 max_health = 5
 
 [node name="Battery 3" parent="." unique_id=1361569264 instance=ExtResource("4_5mrsh")]
+z_index = -1
 position = Vector2(194, 175)
 scale = Vector2(1.5, 1.5)
 max_health = 5
 
 [node name="Battery 4" parent="." unique_id=2027441000 instance=ExtResource("4_5mrsh")]
+z_index = -1
 position = Vector2(460, 92.00001)
 scale = Vector2(2.5, 2.5)
 max_health = 3

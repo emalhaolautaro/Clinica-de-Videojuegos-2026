@@ -13,6 +13,8 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xorlj"]
 gradient = SubResource("Gradient_tt681")
+width = 32
+height = 32
 fill = 1
 fill_from = Vector2(0.49475524, 0.4597902)
 
@@ -36,4 +38,6 @@ shape = SubResource("CircleShape2D_pb8y7")
 stream = ExtResource("3_tt681")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=125668432]
+position = Vector2(1.5, 0)
+scale = Vector2(0.90625, 0.8125)
 texture = SubResource("GradientTexture2D_xorlj")

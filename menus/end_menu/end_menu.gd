@@ -11,7 +11,7 @@ func _ready() -> void:
 
 	if is_victory:
 		result_label.text = "¡VICTORIA!"
-		primary_button.text = "VOLVER AL MENÚ"
+		primary_button.text = "JUGAR DE NUEVO"
 	else:
 		result_label.text = "DERROTA"
 		primary_button.text = "REINTENTAR"
