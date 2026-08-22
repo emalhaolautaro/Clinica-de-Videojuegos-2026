@@ -18,6 +18,8 @@ var facing_direction := 1
 
 var max_jumps := 2
 var jumps_left: int
+var is_jump_prepping := false
+var _pending_jump_velocity := 0.0
 
 
 # Vida
@@ -89,6 +91,7 @@ func _physics_process(delta: float) -> void:
 	handle_horizontal_movement()
 	handle_energy(delta)
 	move_and_slide()
+	handle_animation()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -104,20 +107,35 @@ func apply_gravity(delta: float) -> void:
 		velocity.y += gravity * delta
 
 func handle_jump() -> void:
-	# Al tocar el piso recuperamos ambos saltos
-	if is_on_floor():
+	# Al tocar el piso recuperamos ambos saltos.
+	# Ojo: mientras is_jump_prepping es true, el personaje sigue
+	# técnicamente en el piso (todavía no se aplicó el impulso),
+	# así que NO queremos resetear jumps_left en esos frames.
+	if is_on_floor() and not is_jump_prepping:
 		jumps_left = max_jumps
 
-	if Input.is_action_just_pressed("ui_up") and jumps_left > 0:
-		# Primer salto
-		if jumps_left == max_jumps:
-			velocity.y = jump_velocity
+	# Mientras se está reproduciendo el agache, no aceptamos
+	# más input de salto.
+	if is_jump_prepping:
+		return
 
-		# Segundo salto: un poco más débil
+	if Input.is_action_just_pressed("ui_up") and jumps_left > 0:
+		jumps_left -= 1
+
+		# Primer salto: mostramos primero la anticipación (agache).
+		# El personaje se queda quieto en el piso durante esos
+		# frames; el impulso real se aplica en _on_animation_finished,
+		# cuando jump_prep termina.
+		if jumps_left == max_jumps - 1:
+			_pending_jump_velocity = jump_velocity
+			is_jump_prepping = true
+			sprite.play("jump_prep")
+
+		# Segundo salto: ya estamos en el aire, no tiene sentido
+		# mostrar un agache ahí. Se aplica directo, sin animación
+		# de anticipación.
 		else:
 			velocity.y = jump_velocity * second_jump_multiplier
-
-		jumps_left -= 1
 
 
 func handle_horizontal_movement() -> void:
@@ -131,17 +149,38 @@ func handle_horizontal_movement() -> void:
 			sprite.flip_h = true
 		elif direction > 0:
 			sprite.flip_h = false
-
-		if not is_shooting:
-			sprite.play("run")
 	else:
 		velocity.x = move_toward(
 			velocity.x,
 			0,
 			speed
 		)
-		if not is_shooting:
+
+
+# Animación
+# Se decide todo acá, en un solo lugar, con orden de prioridad:
+# disparo > prep de salto (se deja terminar sola) > en el aire > correr > idle.
+# Así ninguna otra función pelea por controlar sprite.play().
+
+func handle_animation() -> void:
+	if is_shooting:
+		return
+
+	# jump_prep se deja terminar sus 3 frames sin que nada la
+	# interrumpa, incluso si ya estamos en el aire.
+	if is_jump_prepping:
+		return
+
+	if not is_on_floor():
+		if sprite.animation != "jump_air":
+			sprite.play("jump_air")
+	elif velocity.x != 0:
+		if sprite.animation != "run":
+			sprite.play("run")
+	else:
+		if sprite.animation != "idle":
 			sprite.play("idle")
+
 
 # Disparo
 
@@ -164,8 +203,13 @@ func shoot() -> void:
 
 
 func _on_animation_finished() -> void:
+	print("animation finished: ", sprite.animation)
 	if sprite.animation == "shoot":
 		is_shooting = false
+	elif sprite.animation == "jump_prep":
+		is_jump_prepping = false
+		velocity.y = _pending_jump_velocity
+		sprite.play("jump_air")
 	
 
 # Vida
@@ -219,8 +263,6 @@ func _update_flashlight_flicker(delta: float) -> void:
 		_flashlight_target_energy,
 		flashlight_flicker_speed * delta
 	)
-	
-	print("flashlight energy: ", flashlight.energy)
 
 func _setup_spark_particles() -> void:
 	if not spark_particles:
