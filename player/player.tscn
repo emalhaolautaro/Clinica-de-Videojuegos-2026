@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cpts4xsgmafmr" path="res://player/player.gd" id="1_yqg0j"]
 [ext_resource type="Texture2D" uid="uid://bj6cwcdbp8kh3" path="res://player/assets/Full-SpriteSheet.png" id="2_rkbax"]
 [ext_resource type="AudioStream" uid="uid://ddyiogog8de55" path="res://music/SFX JUAN WATTS - Disparo Juan WTF.wav" id="3_g1dw6"]
+[ext_resource type="AudioStream" uid="uid://d2rjxbn4v3rvp" path="res://music/SFX JUAN WATTS - Salto Juan.wav" id="4_yw30f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g1dw6"]
 atlas = ExtResource("2_rkbax")
@@ -488,10 +489,10 @@ flashlight_max_energy = 1.8
 position = Vector2(-2.5, 3.75)
 scale = Vector2(0.17680793, 0.17019236)
 sprite_frames = SubResource("SpriteFrames_8cbh1")
-animation = &"jump_air"
+animation = &"shoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=723655350]
-position = Vector2(0, 3.75)
+position = Vector2(2.5, 5)
 scale = Vector2(0.8, 0.8)
 shape = SubResource("CapsuleShape2D_rkbax")
 
@@ -499,15 +500,18 @@ shape = SubResource("CapsuleShape2D_rkbax")
 position = Vector2(20, -14)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1158539649]
-position = Vector2(0, -11)
+position = Vector2(2.4999998, -3.7500005)
 emitting = false
 texture = SubResource("GradientTexture2D_rggsx")
 spread = 180.0
 
 [node name="Flashlight" type="PointLight2D" parent="." unique_id=1497083827]
-position = Vector2(0, -11)
+position = Vector2(2.5, -2.5000002)
 color = Color(0, 0.6491723, 0.65330577, 1)
 texture = SubResource("GradientTexture2D_d6q8a")
 
 [node name="ShootSFX" type="AudioStreamPlayer2D" parent="." unique_id=1365611897]
 stream = ExtResource("3_g1dw6")
+
+[node name="JumpSFX" type="AudioStreamPlayer2D" parent="." unique_id=871812463]
+stream = ExtResource("4_yw30f")

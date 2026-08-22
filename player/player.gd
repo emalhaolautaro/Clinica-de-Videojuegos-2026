@@ -42,6 +42,7 @@ var is_shooting = false
 @onready var spark_particles: CPUParticles2D = $CPUParticles2D
 @onready var flashlight: PointLight2D = $Flashlight
 @onready var shoot_sfx: AudioStreamPlayer2D = $ShootSFX
+@onready var jump_sfx: AudioStreamPlayer2D = $JumpSFX
 
 # Flashlight de recarga
 @export var flashlight_min_energy := 0.6
@@ -210,6 +211,7 @@ func _on_animation_finished() -> void:
 		is_jump_prepping = false
 		velocity.y = _pending_jump_velocity
 		sprite.play("jump_air")
+		jump_sfx.play()
 	
 
 # Vida
