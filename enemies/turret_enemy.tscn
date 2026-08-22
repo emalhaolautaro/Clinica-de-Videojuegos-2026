@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cp1ne2m3awaig" path="res://enemies/turret_enemy.gd" id="1_3defr"]
 [ext_resource type="Texture2D" uid="uid://bmkwuaaxanh6f" path="res://enemies/assets/Enemigos3.png" id="2_3defr"]
+[ext_resource type="AudioStream" uid="uid://brgg1ediewuj" path="res://music/SFX JUAN WATTS - Disparo enemigos.wav" id="3_ygakt"]
 
 [sub_resource type="Gradient" id="Gradient_3defr"]
 offsets = PackedFloat32Array(0, 0.99759614, 1)
@@ -40,3 +41,6 @@ shape = SubResource("RectangleShape2D_xorlj")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=309176113]
 position = Vector2(7, 25)
+
+[node name="ShootSFX" type="AudioStreamPlayer2D" parent="." unique_id=143865605]
+stream = ExtResource("3_ygakt")

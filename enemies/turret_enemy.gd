@@ -17,6 +17,7 @@ var is_alerting: bool = false
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var muzzle: Marker2D = $Muzzle
 @onready var alert_light: PointLight2D = $AlertLight
+@onready var shoot_sfx: AudioStreamPlayer2D = $ShootSFX
 
 var gravity: float = float(
 	ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -84,6 +85,7 @@ func shoot_at_player() -> void:
 	bullet.direction = aim_direction
 	get_tree().current_scene.add_child(bullet)
 	bullet.global_position = spawn_pos
+	shoot_sfx.play()
 
 
 func take_damage(amount: int) -> void:
